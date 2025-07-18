@@ -90,8 +90,8 @@ body {
     border: 1px solid rgb(59, 228, 59);
     margin-bottom: 10px;
     padding: 10px;
-    color:#000;
-    font-size: 18px;
+    color:#000;;
+    font-size: 18px; 
  }
 
 footer{
