@@ -421,8 +421,8 @@ def orders():
         connection.close()
     return render_template('orders.html', orders_list=orders_list)
 
-#--------Order View by Admin - End---------
+#--------Order View by Admin - End ---------
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
