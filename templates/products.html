@@ -1,35 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinnamon Fertilizer Page</title>
-    <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinnamon Fertilizer Page</title>
+  <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-    body {
-        background: url("https://t4.ftcdn.net/jpg/02/65/13/03/360_F_265130336_TE7GgWBunhfkGx4sA7YAS9kIZ5EROGth.jpg") no-repeat center center fixed;
-        background-size: cover;
-      }
-    img{
-        max-width: 250px;
-        max-height: 225px;
+  <style>
+  
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+
+    /* Navbar */
+    .navbar { background: #0d3b0d; }
+    .navbar .nav-link { color: #fff; transition: 0.3s; }
+    .navbar .nav-link:hover { color: #a5d6a7; }
+
+
+    img {
+      max-width: 250px;
+      max-height: 225px;
     }
 
-    .btn{
-        color: black;
+    /* Product card box styling */
+    .card {
+      border: 2px solid green;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 128, 0, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    </style>
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0, 128, 0, 0.7);
+    }
+
+    .modal-header {
+      background-color: #004d00;
+      color: white;
+    }
+
+    .btn-dark-green {
+      background-color: #006400;
+      color: white;
+      border: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-dark-green:hover {
+      background-color: #004d00;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: green;
+    }
+
+    footer a {
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navbar -->
+ <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand ps-5 fw-bold" href="/">CINNAGURD</a>
 
-<!-- Navbar start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand pl-5" href="/">CINNAGURD</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ml-auto pr-5">
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto pe-5">
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
@@ -41,192 +93,155 @@
         </li>
       </ul>
     </div>
-  </nav>
-<!-- Navbar End -->
+  </div>
+</nav>
+<!-- Navbar -->
 
-  <!---- Fertlizer Products View section - Start --------------->
-    <div class="container mt-5">
-        <h2 class="text-center font-weight-bold">Cinnamon Fertilizer</h2>
-        <div class="row">
-            {% for product in products_list %}
-            <div class="col-lg-3 col-md-6 col-sm-12 p-4">
-                <div class="card shadow border">
-                    <img src="{{ url_for('image_file', filename=product[4]) }}" class="card-img-top" alt="{{ product[1] }}">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>{{ product[1] }}</strong></h5>
-                        <p class="card-text text-small">{{ product[2] }}</p>
-                        <p class="card-text"><strong>Rs {{ product[3] }}</strong></p>
-                        <button type="button" class="btn btn-outline-success" data-toggle="modal" id="buy" data-target="#buyModal{{ product[0] }}">
-                            Buy
-                        </button>
-                    </div>
-                </div>
-            </div>
- <!---- Fertlizer Products View section - End --------------->
 
+ <!-- Navbar -->
  
-    <!-- ------Buy Form Section (Modal) - Start------------------------->
-            <div class="modal fade" id="buyModal{{ product[0] }}" tabindex="-1" role="dialog" aria-labelledby="buyModalLabel{{ product[0] }}" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: rgba(99, 253, 99, 0.744);">
-                            <h5 class="modal-title" id="buyModalLabel{{ product[0] }}">Buy {{ product[1] }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="font-weight-bold" method="post" action="{{ url_for('buy') }}">
-                                <input type="hidden" name="product_id" value="{{ product[0] }}">
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="quantity">Quantity:</label>
-                                    <input type="number" name="quantity" class="form-control" min="1" value="1" required id="quantity{{ product[0] }}" oninput="calculatePrice('{{ product[0] }}')">
-                                    <input type="hidden" name="unit_price" id="unit_price{{ product[0] }}" value="{{ product[3] }}">
-                                </div>
 
-                                <div class=" col-6 form-group">
-                                    <label for="client_name">Full Name:</label>
-                                    <input type="text" name="client_name" class="form-control"  required>
-                                </div>
-                            </div>
-                                
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="client_email">Email:</label>
-                                    <input type="email" name="client_email" class="form-control"  required>
-                                </div>
-                                <div class="col-6 form-group">
-                                    <label for="client_address">Address:</label>
-                                    <textarea name="client_address" class="form-control"  required></textarea>
-                                </div>
-                            </div>
+  <!-- Fertilizer Products Section -->
+  <div class="container mt-5">
+    <h2 class="text-center fw-bold mb-4">Cinnamon Fertilizer</h2>
+    <div class="row">
+      {% for product in products_list %}
+      <div class="col-lg-3 col-md-6 col-sm-12 p-4">
+        <div class="card shadow">
+          <img src="{{ url_for('image_file', filename=product[4]) }}" class="card-img-top" alt="{{ product[1] }}">
+          <div class="card-body text-center">
+            <h5 class="card-title"><strong>{{ product[1] }}</strong></h5>
+            <p class="card-text text-muted small">{{ product[2] }}</p>
+            <p class="card-text"><strong>Rs {{ product[3] }}</strong></p>
+            <button type="button" class="btn btn-dark-green w-100" data-bs-toggle="modal" data-bs-target="#buyModal{{ product[0] }}">
+              Buy Product
+            </button>
+          </div>
+        </div>
+      </div>
 
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="client_mobile">Mobile Number:</label>
-                                    <input type="number" name="client_mobile" class="form-control"  required>
-                                </div>
-                                <div class="col-6 form-group">
-                                    <label for="card_number">Card Number:</label>
-                                    <input type="text" name="card_number" class="form-control"  required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="card_expiry">Expire Date (MM/YY):</label>
-                                    <input type="text" name="card_expiry" class="form-control" required>
-                                </div>
-                                <div class="col-6 form-group">
-                                    <label for="card_cvv">CVV:</label>
-                                    <input type="number"  name="card_cvv" class="form-control"  required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="price">Price (Rs)</label>
-                                    <input type="text" name="price" class="form-control" id="total_price{{ product[0] }}" value=" {{ product[3] }}" readonly>
-                                </div>
-                            </div>
-
-                                <button type="submit" class="btn " style="background-color:  rgb(54, 255, 54); color: black;">Buy</button>
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
+      <!-- Buy Modal -->
+      <div class="modal fade" id="buyModal{{ product[0] }}" tabindex="-1" aria-labelledby="buyModalLabel{{ product[0] }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="buyModalLabel{{ product[0] }}">Buy {{ product[1] }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-<!-- ------Buy Form Section (Modal) - End------------------------->
-
-<script>
-    function calculatePrice(productId) {
-        let quantity = document.getElementById('quantity' + productId).value;
-        let unitPrice = document.getElementById('unit_price' + productId).value;
-        let totalPrice = quantity * unitPrice;
-        document.getElementById('total_price' + productId).value = totalPrice.toFixed(2);
-    }
-</script>
-            {% endfor %}
+            <div class="modal-body">
+              <form class="fw-bold" method="post" action="{{ url_for('buy') }}">
+                <input type="hidden" name="product_id" value="{{ product[0] }}">
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="quantity" class="form-control" min="1" value="1" required id="quantity{{ product[0] }}" oninput="calculatePrice('{{ product[0] }}')">
+                    <input type="hidden" name="unit_price" id="unit_price{{ product[0] }}" value="{{ product[3] }}">
+                  </div>
+                  <div class="col-6">
+                    <label for="client_name">Full Name:</label>
+                    <input type="text" name="client_name" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label for="client_email">Email:</label>
+                    <input type="email" name="client_email" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="client_address">Address:</label>
+                    <textarea name="client_address" class="form-control" required></textarea>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label for="client_mobile">Mobile Number:</label>
+                    <input type="number" name="client_mobile" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="card_number">Card Number:</label>
+                    <input type="text" name="card_number" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label for="card_expiry">Expire Date (MM/YY):</label>
+                    <input type="text" name="card_expiry" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="card_cvv">CVV:</label>
+                    <input type="number" name="card_cvv" class="form-control" required>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label for="price">Price (Rs)</label>
+                    <input type="text" name="price" class="form-control" id="total_price{{ product[0] }}" value="{{ product[3] }}" readonly>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Confirm Purchase</button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
-     <footer class=" text-lg-start text-white">
-  <div class="p-4 pb-0">
-    <section class="">
-      <div class="row">
-        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-          <h6 class=" mb-4 font-weight-bold" style="color: black;">
-            CINNAGURD 
-          </h6>
-          <p class="text-justify">
-            Identify Your Cinnamon Diseases using AI. You can purchase the best fertilizer product by our online store.
-          </p>
-        </div>
-        <hr class="w-100 clearfix d-md-none" />
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h6 class="text-uppercase mb-4 font-weight-bold" style="color: black;">Services</h6>
-          <p>
-            <a class="text-white">Detect the Diseases Using AI</a>
-          </p>
-          <p>
-            <a class="text-white">Treatment Recommendation</a>
-          </p>
-          <p>
-            <a class="text-white">Online Fertilizer Store</a>
-          </p>
-          <p>
-            <a class="text-white">24 x 7 Service</a>
-          </p>
-        </div>
-        <hr class="w-100 clearfix d-md-none" />
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h6 class="text-uppercase mb-4 font-weight-bold" style="color: black;">
-            Benifits
-          </h6>
-          <p>
-            <a class="text-white">Using Advanced AI Technology</a>
-          </p>
-          <p>
-            <a class="text-white">Online Payments</a>
-          </p>
-          <p>
-            <a class="text-white">Easy to Access</a>
-          </p>
-          <p>
-            <a class="text-white">Help</a>
-          </p>
-        </div>
-        <hr class="w-100 clearfix d-md-none" />
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-          <h6 class="text-uppercase mb-4 font-weight-bold" style="color: black;">Contact Us</h6>
-          <p>CinnaGurd, No 12, Galle, Sri Lanka</p>
-          <p>cinnagurd@gmail.com</p>
-          <p>+94 91 222 3211</p>
-          <p>+94 76 881 1219</p>
-        </div>
-        
-      </div>
-      
-    </section>
-
-    <section class="p-1 pt-0">
-      <div class="row d-flex justify-content-center border-top">
-        
-        <div class="col-12">
-         
-          <div class="p-3 text-center">
-            © 2025 Copyright: <a class="text-white decaration-none" href="#"
-               >CinnaGurd.com | Created by Banuka Wimalaweera (GL/BSCSD/07/17)</a>
-          </div>          
-        </div>
-      </div>
-    </section>
-    
   </div>
 
-</footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Footer -->
+  <footer class="text-lg-start text-white mt-5">
+    <div class="p-4 pb-0">
+      <section>
+        <div class="row">
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="mb-4 fw-bold text-dark">CINNAGURD</h6>
+            <p>Identify Your Cinnamon Diseases using AI. You can purchase the best fertilizer product by our online store.</p>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 fw-bold text-dark">Services</h6>
+            <p><a class="text-white">Detect the Diseases Using AI</a></p>
+            <p><a class="text-white">Treatment Recommendation</a></p>
+            <p><a class="text-white">Online Fertilizer Store</a></p>
+            <p><a class="text-white">24 x 7 Service</a></p>
+          </div>
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 fw-bold text-dark">Benefits</h6>
+            <p><a class="text-white">Using Advanced AI Technology</a></p>
+            <p><a class="text-white">Online Payments</a></p>
+            <p><a class="text-white">Easy to Access</a></p>
+            <p><a class="text-white">Help</a></p>
+          </div>
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 fw-bold text-dark">Contact Us</h6>
+            <p>CinnaGurd, No 12, Galle, Sri Lanka</p>
+            <p>cinnagurd@gmail.com</p>
+            <p>+94 91 222 3211</p>
+            <p>+94 76 881 1219</p>
+          </div>
+        </div>
+      </section>
+      <section class="p-1 pt-0">
+        <div class="row d-flex justify-content-center border-top">
+          <div class="col-12">
+            <div class="p-3 text-center">
+              © 2025 Copyright:
+              <a class="text-white" href="#">CinnaGurd.com | Created by Banuka Wimalaweera (GL/BSCSD/07/17)</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function calculatePrice(productId) {
+      let quantity = document.getElementById('quantity' + productId).value;
+      let unitPrice = document.getElementById('unit_price' + productId).value;
+      let totalPrice = quantity * unitPrice;
+      document.getElementById('total_price' + productId).value = totalPrice.toFixed(2);
+    }
+  </script>
 </body>
 </html>

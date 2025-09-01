@@ -1,102 +1,210 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Result Page</title>
-    <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Result Page</title>
+  <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      background: #f8f9fa; /* Modern light gray background */
+      font-family: 'Inter', 'Arial', sans-serif; /* Modern font stack */
+      color: #333;
+    }
+    /* Navbar */
+    .navbar {
+      background: #0d3b0d;
+    }
+    .navbar .nav-link {
+      color: #fff;
+      transition: 0.3s;
+    }
+    .navbar .nav-link:hover {
+      color: #a5d6a7;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      color: #fff !important;
+    }
+    /* Container Card */
+    .detec {
+      max-width: 850px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.9); /* Slightly opaque white for glass effect */
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(27, 205, 68, 0.4); /* Green shadow */
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .detec:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(27, 205, 68, 0.6); /* Enhanced green shadow */
+    }
+    h1, h4, h5 {
+      color: #000;
+      font-weight: 700;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .res-img {
+      display: block;
+      margin: 20px auto;
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    .brief {
+      text-align: justify;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    /* Treatments Section */
+    .treatments-section {
+      text-align: left; /* Align treatments to the left */
+    }
+    .treatments-section h5 {
+      color: green; /* Light green color */
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .treatments-section ol {
+      padding-left: 20px;
+    }
+    .items {
+      font-size: 17px;
+      margin-top: 6px;
+      font-weight: 500;
+      color: black; /* Light green color */
+    }
+    /* Buttons */
+    .button-res {
+      background-color: #0d3b0d; /* Navbar color */
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1em;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(27, 205, 68, 0.4); /* Green shadow */
+      transition: all 0.3s;
+    }
+    .button-res:hover {
+      background-color: #1a5c1a; /* Slightly lighter shade */
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(27, 205, 68, 0.6);
+      transform: scale(1.05);
+    }
+    .btn-back {
+      background-color: #0d3b0d; /* Navbar color */
+      color: #fff;
+      padding: 10px 20px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(27, 205, 68, 0.4); /* Green shadow */
+    }
+    .btn-back:hover {
+      background-color: #1a5c1a;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(27, 205, 68, 0.6);
+    }
+    /* Modal */
+    .modal-content {
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 32px rgba(27, 205, 68, 0.4);
+    }
+    .modal-header {
+      background-color: green; /* Navbar color */
+      color: #fff;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    .modal-title {
+      font-weight: 700;
+    }
+    .modal-body {
+      padding: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .close {
+      color: #fff;
+      opacity: 1;
+    }
+    .close:hover {
+      color: #a5d6a7;
+    }
+    /* More Info Link */
+    .more-info-link {
+      color: #0d3b0d;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .more-info-link:hover {
+      color: #1a5c1a;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand pl-5" href="/">CinnaGurd</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto pr-5">
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
+      <li class="nav-item"><a class="nav-link" href="/products">Fertilizer</a></li>
+    </ul>
+  </div>
+</nav>
 
-  body{
+<!-- Title -->
+<div class="container mt-5">
+  <h1 class="text-center font-weight-bold">SHOW THE PREDICTION RESULT</h1>
+</div>
 
-    background: url("https://us.123rf.com/450wm/phordi/phordi1805/phordi180500625/101440820-green-bokeh-background.jpg?ver=6") no-repeat center center fixed;
-    background-size: cover;
-  }
-  .res-img {
-    display: block;
-    margin: 20px auto;
-  }
-  .brief{
-    text-align: justify;
-  }
-
-  .items{
-    font-size: 17px;
-    margin-top: 6px;
-  }
-
-.button-res{
-    background-color:  rgba(53, 245, 53, 0.744);;
-    color: #000000;
-    padding: 8px 15px;
-    font-size: 1em;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration-line: none;
-    font-weight: 600;
-    box-shadow: 0px 0px 10px rgba(198, 255, 181, 0.8);;
-  }
-
-  .button-res:hover{
-    background: #000;
-    color: #fff;
-  }
-
-  .detec {
-    max-width: 850px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.359);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-   }
-
-</style>
-
-  </head>
-  <body>
-
-    <div class="container mt-4">
-      <h1 class="text-center font-weight-bold">Show the Result</h1>
-    </div>
-
-    <!-- Result section-->
-    <div class="container border mb-2 detec">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 res">
-      <img class="res-img" src="{{ url_for('uploaded_file', filename=filepath) }}" alt="Uploaded Image" style="max-width: 200px; max-height: 200px;">
-      <h4 class="text-center font-weight-bold" id="label">Result: {{ label }} </h4>
-
-      
-      <a  href="#" data-toggle="modal" data-target="#briefModal">Click More Info</a>
+<!-- Result Section -->
+<div class="container mb-4 detec">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 res">
+      <img class="res-img" src="{{ url_for('uploaded_file', filename=filepath) }}" alt="Uploaded Image">
+      <h4 class="text-center font-weight-bold" id="label">Result: {{ label }}</h4>
+      <a href="#" class="more-info-link" data-toggle="modal" data-target="#briefModal">Click More Info</a>
     </div>
   </div>
 
   <div class="row pt-3">
-    <div class="col-lg-12 col-sm-12">
-      <h5 class="text-start font-weight-bold" style="text-shadow: 0px 0px 10px rgba(198, 255, 181, 0.8);">Treatments</h5>
+    <div class="col-lg-12 col-sm-12 treatments-section">
+      <h5>Treatments</h5>
       <ol class="pt-0">
         {% for item in treatment %}
-          <li class="items" style="font-weight: 500; color: #000000;">{{ item }}</li>
+          <li class="items">{{ item }}</li>
         {% endfor %}
       </ol>
-
-      <a href="/detect" type="button" class="btn btn-outline-primary">Back</a>
+      <a href="/detect" class="btn btn-back">Back</a>
     </div>
-  </div> 
+  </div>
 </div>
 
-<!-- Result section-->
-
-
-<!-- Modal Section - Start ------->
+<!-- Modal Section -->
 <div class="modal fade" id="briefModal" tabindex="-1" role="dialog" aria-labelledby="briefModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header" style="background-color: rgba(99, 253, 99, 0.744);">
+      <div class="modal-header">
         <h5 class="modal-title font-weight-bold text-center" id="briefModalLabel">Description of {{ label }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -106,19 +214,15 @@
         <p class="brief pt-2">{{ brief }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn button-res" data-dismiss="modal">Close</button>
+        <button type="button" class="btn button-res" data-dismiss="modal">Close Tab</button>
       </div>
     </div>
   </div>
 </div>
-<!-- Modal Section - End ------->
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  </body>
+</body>
 </html>
-
-

@@ -1,113 +1,142 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Detection Page</title>
-    <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-   
-    <style>
-      body {
-        background: url("https://t4.ftcdn.net/jpg/02/65/13/03/360_F_265130336_TE7GgWBunhfkGx4sA7YAS9kIZ5EROGth.jpg") no-repeat center center fixed;
-        background-size: cover;
-      }
-
-      .image-preview {
-        max-width: 300px;
-        max-height: 250px;
-        margin: 20px auto;
-      }
-
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Detection Page</title>
+  <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    /* Navbar */
+    .navbar { background: #0d3b0d; }
+    .navbar .nav-link { color: #fff; transition: 0.3s; }
+    .navbar .nav-link:hover { color: #a5d6a7; }
+    .navbar-brand { font-weight: 700; color: #fff !important; }
+    /* Body */
+    body { 
+      background: #f8f9fa; 
+      font-family: 'Arial', sans-serif; 
+    }
+    /* Container Glass Effect */
     .detec {
-    max-width: 600px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.296);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-     }
-
-     h1{
-      color: rgb(0, 0, 0);
-     }
-
-     .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #1bcd44;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;   
-     } 
-
-   .btn:hover {
-    background-color: #3be35f;
-   }  
-    </style>
-
-
-  </head>
-  <body>
-
-<!-- Navbar start -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(27, 205, 68, 0.4); /* Green shadow for card */
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .detec:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 12px 40px rgba(27, 205, 68, 0.6); /* Enhanced green shadow on hover */
+    }
+    h1 {
+      color: #000;
+      margin-bottom: 30px;
+    }
+    /* Upload Image Heading */
+    .detec h4 {
+      font-weight: bold; /* Bold font for UPLOAD IMAGE */
+      margin-bottom: 30px;
+    }
+    /* Button */
+    .btn-custom {
+      padding: 12px 30px;
+      background-color: #0d3b0d; /* Navbar color for Detect button */
+      color: #fff; /* White text for contrast */
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      transition: all 0.3s;
+    }
+    .btn-custom:hover {
+      background-color: #1a5c1a; /* Slightly lighter shade for hover */
+      transform: scale(1.05);
+      color: #fff;
+    }
+    /* Image preview */
+    .image-preview {
+      max-width: 300px;
+      max-height: 250px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    /* Custom File Input */
+    .custom-file-upload {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(27, 205, 68, 0.4); /* Green shadow */
+    }
+    .custom-file-upload:hover {
+      background-color: #d3d3d3;
+      box-shadow: 0 6px 16px rgba(27, 205, 68, 0.6); /* Enhanced green shadow on hover */
+    }
+    .custom-file-upload i {
+      margin-right: 8px;
+    }
+    .custom-file-upload input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand pl-5" href="/">CinnaGurd</a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto pr-5">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/feedback">Feedback</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/products">Fertilizer</a>
-      </li>
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
+      <li class="nav-item"><a class="nav-link" href="/products">Fertilizer</a></li>
     </ul>
   </div>
 </nav>
-<!-- Navbar End -->
-
-<!-- Upload img section-->
-    <div class="container  mt-5">
-      <h1 class="text-center font-weight-bold">Detect Your Cinnamon Stem and Branch Diseases</h1>
-    </div>
-
-<!-- Upload img section-->
-<div class="container  mt-5  detec">
-  <h4 class="text-center">Upload Image</h4>
-  <div class="row justify-content-center">
-    <div class="col-lg-6 col-sm-12">
-      <form  method="post" enctype="multipart/form-data" action="/predict">
-        <div class="form-group pt-3">
-          <input type="file" name="file" class="form-control-file" required id="fileInput" onchange="showImagePreview(event)">
-          <img id="imagePreview" class="image-preview" src="#" alt="Your Image" style="display: none;">
-        </div>
-        <div class="text-center pt-2">
-        <button type="submit" name="submit" class="btn">Detect</button>
-      </div>
-      </form>
-    </div>
-  </div>
+<!-- Title -->
+<div class="container mt-5">
+  <h1 class="text-center font-weight-bold">Detect Your Cinnamon Stem and Branch Diseases</h1>
 </div>
-  <!-- Upload img section-->
-
-  
-  <script>
-    function showImagePreview(event) {
-      var file = event.target.files[0];
-      var reader = new FileReader();
-      reader.onload = function() {
-        var output = document.getElementById('imagePreview');
-        output.src = reader.result;
-        output.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    }
-  </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+<!-- Upload Section -->
+<div class="container detec">
+  <h4 class="mb-4">UPLOAD IMAGE</h4>
+  <form method="post" enctype="multipart/form-data" action="/predict">
+    <div class="form-group">
+      <label for="fileInput" class="custom-file-upload">
+        <i class="fas fa-upload"></i> Choose Image
+        <input type="file" name="file" id="fileInput" accept="image/*" required onchange="showImagePreview(event)">
+      </label>
+    </div>
+    <img id="imagePreview" class="image-preview" src="#" alt="Your Image" style="display: none;">
+    <div class="pt-3">
+      <button type="submit" class="btn btn-custom">Detect</button>
+    </div>
+  </form>
+</div>
+<!-- Scripts -->
+<script>
+  function showImagePreview(event) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+      var output = document.getElementById('imagePreview');
+      output.src = reader.result;
+      output.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
