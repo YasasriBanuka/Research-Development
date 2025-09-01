@@ -6,132 +6,181 @@
     <title>Feedback Page</title>
     <link rel="icon" href="{{ url_for('image_file', filename='cinnamon.png') }}" type="image/x-icon">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-
     <style>
-      body {
-        background: url("https://t4.ftcdn.net/jpg/02/65/13/03/360_F_265130336_TE7GgWBunhfkGx4sA7YAS9kIZ5EROGth.jpg") no-repeat center center fixed;
-        background-size: cover;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-
-      .container {
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
             max-width: 600px;
             margin-top: 50px;
         }
 
-        h1, h4 {
+        h3, h4 {
             text-align: center;
+        }
+        h3.feedback-title {
+           font-family: "Arial Black", Gadget, sans-serif;
         }
         .form-group {
             margin-bottom: 15px;
         }
-        button.btn {
-            display: block;
-            width: 20%;
-            align-items: center;
+        .feedback-form {
+            background-color: #f5f2f254;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 15px 5px green; /* Green shadow */
         }
-
         .btn {
-          display: inline-block;
-          padding: 10px 20px;
-          background-color: #07f83f;
-          color: #000000;
-          border: none;
-          border-radius: 15px;
-          cursor: pointer;  
-        } 
-
-        .btn:hover {
-          background-color: #3be35f;
+            display: block;
+            margin: 20px auto; /* Center the button */
+            padding: 10px 20px;
+            background-color:  green;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
         }
-
-        .msg{
-           padding-top: 5px;
-           font-weight: bold;
-           color: #000000;
+        .btn:hover {
+            background-color:#07f83f;
+        }
+        .msg {
+            padding-top: 15px; /* Space from button */
+            padding-bottom: 20px; /* Space before footer */
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+        }
+        footer {
+            background-color: green; /* Green background for footer */
+            color: white;
+            
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        h6{
+          color: black;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
-
 <body>
-
 <!-- Navbar start -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand pl-5" href="/">DR. CINNAMON</a>
+  <a class="navbar-brand pl-5" href="/">CINNAGURD</a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto pr-5">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/feedback">Feedback</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/products">Fertilizer</a>
-      </li>
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/feedback">Feedback</a></li>
+      <li class="nav-item"><a class="nav-link" href="/products">Fertilizer</a></li>
     </ul>
   </div>
 </nav>
 <!-- Navbar End -->
 
-<!----------Feedback Form - Start ---------->
-<div class=" container px-3 pb-2 mt-5" style="background-color: #f5f2f254; border-radius: 5px;">
-  <h1 class="text-center">Feedback Form</h1>
-  <P class="font-weight-bold text-center pt-1">Share Your Experiences</P>
+<!-- Feedback Form Start -->
+<div class="container feedback-form mt-5">
+  <h3 class="text-center feedback-title">Feedback Form</h3>
+  <p class="font-weight-bold text-center pt-1">Share Your Experiences</p>
   <form action="{{ url_for('feedback') }}" method="post">
       <div class="form-group">
           <label for="name" class="font-weight-bold">Full Name:</label>
-          <input type="text" class="form-control" id="name" name="name" required>
+          <input type="text" class="form-control" id="name" name="name" placeholder=" Enter Your Name Here!" required>
       </div>
       <div class="form-group">
           <label for="message" class="font-weight-bold">Message:</label>
-          <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+          <textarea class="form-control" id="message" name="message" rows="4" placeholder="Message Enter Here!" required></textarea>
       </div>
-      <button class="btn" id="submit" type="submit">Send</button>
-
-      <!-- Display success or error message -->
-    {% if feedback_message %}
-    <p class="text-center color-success msg" id="feedbackMessage">{{ feedback_message }}</p>
-{% endif %}
+      <button class="btn" id="submit" type="submit">Send Feedback</button>
+      {% if feedback_message %}
+      <p class="msg" id="feedbackMessage">{{ feedback_message }}</p>
+      {% endif %}
   </form>
 </div>
- <!----------Feedback Form - Start ---------->
-  
+<!-- Feedback Form End -->
 
- <!-- Display Feedback section -->
-  <div class="container">
+<!-- Feedback Carousel Start -->
+<div class="container mt-4">
     <div class="row">
-      <div class="col-12">
-         <div id="feedbackCarousel" class="carousel slide mt-4" data-ride="carousel">
-  <div class="carousel-inner">
-      {% for feedback in feedback_list %}
-          <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
-              <div class="d-block w-100 p-4" style="background-color: rgba(109, 109, 109, 0.296); border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                  <h6 class="text-center">{{ feedback[0] }}</h6>
-                  <p class="font-weight-bold text-center" style="font-size: medium;">{{ feedback[1] }}</p>
-              </div>
+        <div class="col-12">
+            <div id="feedbackCarousel" class="carousel slide mt-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for feedback in feedback_list %}
+                    <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                        <div class="d-block w-100 p-4" style="background-color: rgba(109, 109, 109, 0.296); border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                            <h6 class="text-center">{{ feedback[0] }}</h6>
+                            <p class="font-weight-bold text-center" style="font-size: medium;">{{ feedback[1] }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#feedbackCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#feedbackCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Feedback Carousel End -->
+
+<!-- Footer Section -->
+<footer class="text-lg-start mt-5">
+  <div class="p-4 pb-0">
+    <section>
+      <div class="row">
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="mb-4 font-weight-bold">CINNAGURD</h6>
+          <p>Identify Your Cinnamon Diseases using AI. You can purchase the best fertilizer product by our online store.</p>
+        </div>
+        <hr class="w-100 clearfix d-md-none" />
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Services</h6>
+          <p><a>Detect the Diseases Using AI</a></p>
+          <p><a>Treatment Recommendation</a></p>
+          <p><a>Online Fertilizer Store</a></p>
+          <p><a>24 x 7 Service</a></p>
+        </div>
+        <hr class="w-100 clearfix d-md-none" />
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Benefits</h6>
+          <p><a>Using Advanced AI Technology</a></p>
+          <p><a>Online Payments</a></p>
+          <p><a>Easy to Access</a></p>
+          <p><a>Help</a></p>
+        </div>
+        <hr class="w-100 clearfix d-md-none" />
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Contact Us</h6>
+          <p>CinnaGurd No 12, Galle, Sri Lanka</p>
+          <p>cinnagurd@gmail.com</p>
+          <p>+94 91 222 3211</p>
+          <p>+94 76 881 1219</p>
+        </div>
+      </div>
+    </section>
+    <section class="p-1 pt-3">
+      <div class="row d-flex justify-content-center border-top">
+        <div class="col-12">
+          <div class="p-3 text-center">
+            © 2025 Copyright: <a href="#">CinnaGurd.com | Created by Banuka Wimalaweera (GL/BSCSD/07/17)</a>
           </div>
-      {% endfor %}
+        </div>
+      </div>
+    </section>
   </div>
-  <a class="carousel-control-prev" href="#feedbackCarousel" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#feedbackCarousel" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-  </a>
-</div>
-</div>
-</div>
-</div> 
-</div>
+</footer>
 
-<!-- Display Feedback section -->
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
