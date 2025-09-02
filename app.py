@@ -1,3 +1,7 @@
+#20281908
+#Yasasri Banuka Dias Wimalaweera
+#GL/BSCSD/07/17 
+
 import os
 import json
 import numpy as np
@@ -42,8 +46,6 @@ app.config['MAIL_DEFAULT_SENDER'] = ('Dr.CINNAMON', 'pasan20pethangoda@gmail.com
 mail = Mail(app)
 
 # -----------Flask-Mail configuration-------------------
-
-
 
 #--------------Load the model-----------------------
 model = load_model('model_2.h5')
