@@ -34,4 +34,4 @@
 6) env folder is virtual environment. All installd libraires are included in this folder.
 
 
-7) Style sheet file is included in "static" folder.
+7) Style sheet file is included in "static" folder. 
