@@ -1,7 +1,3 @@
-#20281908
-#Yasasri Banuka Dias Wimalaweera
-#GL/BSCSD/07/17 
-
 import os
 import json
 import numpy as np
@@ -37,15 +33,17 @@ ADMIN_PASSWORD = '1236'
 
 # -----------Flask-Mail configuration-------------------
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  
-app.config['MAIL_PORT'] = 587
+app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'pasan20pethangoda@gmail.com'
-app.config['MAIL_PASSWORD'] = 'iaqs sgjc nktz suhq'
-app.config['MAIL_DEFAULT_SENDER'] = ('Dr.CINNAMON', 'pasan20pethangoda@gmail.com')
+app.config['MAIL_USERNAME'] = 'banukadias5@gmail.com'
+app.config['MAIL_PASSWORD'] = 'cfp lxz wul npy wmwa'
+app.config['MAIL_DEFAULT_SENDER'] = ('CINNAGURD', 'banukadias5@gmail.com')
 
 mail = Mail(app)
 
 # -----------Flask-Mail configuration-------------------
+
+
 
 #--------------Load the model-----------------------
 model = load_model('model_2.h5')

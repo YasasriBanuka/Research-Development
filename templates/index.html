@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -31,8 +31,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-      backdrop-filter: blur(4px);      /* Blur effect */
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
       z-index: 1;
     }
     .hero-content {
@@ -65,28 +65,59 @@
     .about-text h2 { margin-bottom: 20px; color: #0d3b0d; }
     .about-text p { line-height: 1.7; }
 
-    /* Fertilizer Cards Hover Cinnamon */
-    .card-hover {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      transition: transform 0.4s, box-shadow 0.4s;
-      cursor: pointer;
+    /* Fertilizer Cards */
+    .fertilizer-section h3 {
+      color: #0d3b0d;
+      margin-bottom: 30px;
     }
-    .card-hover::before {
-      content: "";
-      position: absolute;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: url('{{ url_for("image_file", filename="cinnamon-bg.jpg") }}') center/cover no-repeat;
-      opacity: 0;
-      transition: opacity 0.4s;
-      z-index: 1;
+    .card-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-    .card-hover:hover::before { opacity: 0.2; }
-    .card-hover .card-body { position: relative; z-index: 2; }
-    .card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,128,0,0.4); }
-    .card-title { color: #0d3b0d; font-weight: 700; }
+    .fertilizer-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .fertilizer-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .fertilizer-card h3 {
+      color: #0d3b0d;
+      margin: 15px 0;
+      font-size: 1.2rem;
+    }
+    .fertilizer-card .btn {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .fertilizer-card .btn:hover {
+      background-color: #1e7e34;
+    }
+    .fertilizer-card:hover {
+      transform: translateY(-5px);
+    }
+    @media (max-width: 768px) {
+      .fertilizer-card {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 20px;
+      }
+    }
 
     /* Services Section Hover Cinnamon */
     .service-hover {
@@ -101,8 +132,10 @@
     .service-hover::before {
       content: "";
       position: absolute;
-      top:0; left:0;
-      width:100%; height:100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: url('{{ url_for("image_file", filename="cinnamon-bg.jpg") }}') center/cover no-repeat;
       opacity: 0;
       transition: opacity 0.4s;
@@ -121,11 +154,9 @@
     footer {
       background-color: green;
     }
-
     footer a {
       text-decoration: none;
     }
-
     footer a:hover {
       text-decoration: underline;
     }
@@ -150,10 +181,9 @@
   </style>
 </head>
 <body>
-
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
-     <a class="navbar-brand pl-5 font-weight-bold" href="/">CINNAGURD</a>
+    <a class="navbar-brand pl-5 font-weight-bold" href="/">CINNAGURD</a>
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto pr-5">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
@@ -191,35 +221,23 @@
   </section>
 
   <!-- Fertilizer Section -->
-  <section class="container my-5">
-    <h3 class="text-center mb-4" style="color:#0d3b0d;">CinnaGurd Fertilizers</h3>
-    <div class="row">
-      <div class="col-lg-4 mb-4">
-        <div class="card card-hover">
-          <img src="{{ url_for('image_file', filename='C-U.png') }}" class="card-img-top" alt="Cinnamon U">
-          <div class="card-body text-center">
-            <h5 class="card-title">Cinnamon (U)</h5>
-            <a href="/products" class="btn btn-outline-success">See More</a>
-          </div>
-        </div>
+  <section class="container my-5 fertilizer-section">
+    <h3 class="text-center mb-4">CinnaGurd Fertilizers</h3>
+    <div class="card-container">
+      <div class="fertilizer-card">
+        <img src="{{ url_for('image_file', filename='C-U.png') }}" class="card-img-top" alt="Cinnamon Super">
+        <h3>Cinnamon (U)</h3>
+        <a href="/products" class="btn">See More</a>
       </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card card-hover">
-          <img src="{{ url_for('image_file', filename='C-Super.png') }}" class="card-img-top" alt="Cinnamon Super">
-          <div class="card-body text-center">
-            <h5 class="card-title">Cinnamon Super</h5>
-            <a href="/products" class="btn btn-outline-success">See More</a>
-          </div>
-        </div>
+      <div class="fertilizer-card">
+         <img src="{{ url_for('image_file', filename='C-Super.png') }}" class="card-img-top" alt="Cinnamon Super">
+        <h3>Cinnamon Super</h3>
+        <a href="/products" class="btn">See More</a>
       </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card card-hover">
-          <img src="{{ url_for('image_file', filename='Nitrogen.png') }}" class="card-img-top" alt="UREA">
-          <div class="card-body text-center">
-            <h5 class="card-title">UREA</h5>
-            <a href="/products" class="btn btn-outline-success">See More</a>
-          </div>
-        </div>
+      <div class="fertilizer-card">
+         <img src="{{ url_for('image_file', filename='Nitrogen.png') }}" class="card-img-top" alt="Cinnamon Super">
+        <h3>UREA</h3>
+        <a href="/products" class="btn">See More</a>
       </div>
     </div>
   </section>
@@ -277,7 +295,7 @@
       <section>
         <div class="row">
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 class="mb-4 font-weight-bold" style="color: black;">CINNAGURD</h6>
+            <h6 class="mb-4 font-weight-bold" style="color: black;">CINNAGURD</h6>
             <p>Identify Your Cinnamon Diseases using AI. You can purchase the best fertilizer product by our online store.</p>
           </div>
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
@@ -288,14 +306,14 @@
             <p><a class="text-white">24 x 7 Service</a></p>
           </div>
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 class="class="mb-4 font-weight-bold" style="color: black;">BENEFITS</h6>
+            <h6 class="mb-4 font-weight-bold" style="color: black;">BENEFITS</h6>
             <p><a class="text-white">Using Advanced AI Technology</a></p>
             <p><a class="text-white">Online Payments</a></p>
             <p><a class="text-white">Easy to Access</a></p>
             <p><a class="text-white">Help</a></p>
           </div>
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 class="class="mb-4 font-weight-bold" style="color: black;">CONTACT US</h6>
+            <h6 class="mb-4 font-weight-bold" style="color: black;">CONTACT US</h6>
             <p>CinnaGurd, No 12, Galle, Sri Lanka</p>
             <p>cinnagurd@gmail.com</p>
             <p>+94 91 222 3211</p>
@@ -315,6 +333,7 @@
       </section>
     </div>
   </footer>
+
   <!-- Scroll to Top -->
   <button id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
 
